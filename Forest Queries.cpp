@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define IWillWinTCPC cout.tie(0), cin.tie(0), ios_base::sync_with_stdio(0);
+#define int long long 
+#define Take(x) for ( auto & d : x ) cin >> d ; 
+#define No cout << "No" << endl  
+#define Yes cout << "Yes" << endl  
+#define Sort(x) sort( x.begin() , x.end() ) ;
+#define RSort(x) sort( x.begin() , x.end() ) ; reverse ( x.begin() , x.end() ) ; 
+#define MOD 998244353
+#define Sum(A) accumulate( A.begin() , A.end() , (int)0 ) 
+#define MAX LONG_LONG_MAX 
+#define MIN LONG_LONG_MIN 
+#define endl '\n' 
+#define Unique(x) x.erase(unique(x.begin(),x.end()),x.end());
+#define isSorted(x) is_sorted(x.begin(),x.end())
+/* 
+ASk WHY???!!! DOES IT MATTER IF.... ??!! ARE WE SUPPOSED TO DO LIkE HE SAID???!! DOES IT MATTER THAT THE SUBPROBLEMS ARE SEPERATED ? AM I SUPPOSED TO FIND THE OPTIMAL WAY BY MYSELF ? WHY DID HE GCanWeE ME SUCH CONSTRAINT ? CONSIDER ELIMINATING SOME CASSES OR EXCESS ELEMENTS 
+*/
+/* 
+STAY ORGANIZED , DON'T RUSH , DON'T THINk ABOUT A SOLUTION THAT's BASED ON LUCk , DON'T CHECK WRONG RESULTS  , DON'T RUSH TO THE IMPLEMENTATION , THINK CAREFULL , DONT RUSH!!!
+*/
+void solve()
+{
+    int n , q ; cin >> n >> q ; 
+    vector<vector<int>> M(n,vector<int>(n));
+    for ( int i = 0 ; i < n ; ++i ) 
+    for ( int j = 0 ; j < n ; ++j ) 
+    {
+        char c ; cin >> c ; 
+        M[i][j] = c == '*' ; 
+    }
+    
+    for ( int i = 0 ; i < n ; ++i ) 
+    for ( int j = 1 ; j < n ; ++j ) M[i][j] += M[i][j-1];
+    for ( int i = 0 ; i < n ; ++i ) 
+    for ( int j = 1 ; j < n ; ++j ) M[j][i] += M[j-1][i];
+    for ( int i = 0 ; i < q ; ++i ) 
+    {
+        int y1 , x1 , y2 , x2 ; cin >> y1 >> x1 >> y2 >> x2 ; 
+        y1--;x1--;y2--;x2--;
+        int UL = ( y1 && x1 ? M[y1-1][x1-1] : 0) ; 
+        int UR = ( y1 ? M[y1-1][x2] : 0 ) ; 
+        int DL = ( x1 ? M[y2][x1-1] : 0) ; 
+        int Result = M[y2][x2] - UR - DL + UL ; 
+        cout << Result << endl ; 
+    }
+}
+signed main() 
+{
+    #ifndef ONLINE_JUDGE
+    freopen("Input.txt", "r", stdin);
+    freopen("Output.txt", "w", stdout);
+    #endif
+    IWillWinTCPC ;   
+    cout<<fixed<<setprecision(14);
+    int t = 1 ; 
+    // cin >> t ; 
+    while ( t-- ) solve();
+    return 0;
+}
